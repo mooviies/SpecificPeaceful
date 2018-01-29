@@ -1,0 +1,12 @@
+name: SelectivePeaceful
+main: com.mooviies.speaceful.SelectivePeaceful
+version: 0.1
+author: mooviies
+commands:
+  selp:
+    usage: selp [player] [true|false]
+    description: Toggle a player peaceful mode
+    aliases: [selectivepeaceful]
+permissions:
+  selp.*:
+    description: Grants you all SelectivePeaceful permissions
