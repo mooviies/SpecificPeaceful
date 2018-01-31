@@ -1,8 +1,6 @@
 package com.mooviies.speaceful;
 
-import com.mooviies.speaceful.entities.*;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,7 +10,7 @@ import java.io.*;
 import java.util.HashSet;
 import java.util.UUID;
 
-public class SelectivePeaceful extends JavaPlugin {
+public class SelectivePeaceful extends JavaPlugin{
     public String pluginFolder = getDataFolder().getAbsolutePath();
     public String saveFileName = "playersOnPeaceful.dat";
     private HashSet<UUID> playersUUIDOnPeaceful = new HashSet<>();
@@ -23,53 +21,23 @@ public class SelectivePeaceful extends JavaPlugin {
         return instance;
     }
 
+    public boolean playerIsOnPeaceful(UUID uuid)
+    {
+        return playersUUIDOnPeaceful.contains(uuid);
+    }
+
     @Override
     public void onEnable() {
         instance = this;
         Load();
 
-        NMSUtils.registerEntity(NMSUtils.Type.BLAZE, CustomEntityBlaze.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.CAVE_SPIDER, CustomEntityCaveSpider.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.CREEPER, CustomEntityCreeper.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.ENDERMITE, CustomEntityEndermite.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.GHAST, CustomEntityGhast.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.HUSK, CustomEntityHusk.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.SKELETON, CustomEntitySkeleton.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.SPIDER, CustomEntitySpider.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.STRAY, CustomEntityStray.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.VINDICATOR, CustomEntityVindicator.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.WITCH, CustomEntityWitch.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.ZOMBIE, CustomEntityZombie.class, true);
-        NMSUtils.registerEntity(NMSUtils.Type.ZOMBIE_VILLAGER, CustomEntityZombieVillager.class, true);
+        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(this), this);
+        getServer().getPluginManager().registerEvents(new EntityTargetListener(this), this);
     }
 
     @Override
     public void onDisable() {
         Save();
-    }
-
-    public boolean playerIsOnPeaceful(Player player)
-    {
-        if(player == null)
-            return false;
-
-        return playersUUIDOnPeaceful.contains(player.getUniqueId());
-    }
-
-    public boolean playerIsOnPeaceful(OfflinePlayer player)
-    {
-        if(player == null)
-            return false;
-
-        return playersUUIDOnPeaceful.contains(player.getUniqueId());
-    }
-
-    public boolean playerIsOnPeaceful(UUID uuid)
-    {
-        if(uuid == null)
-            return false;
-
-        return playersUUIDOnPeaceful.contains(uuid);
     }
 
     @Override

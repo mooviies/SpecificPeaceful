@@ -1,6 +1,6 @@
 name: SelectivePeaceful
 main: com.mooviies.speaceful.SelectivePeaceful
-version: 0.1
+version: 1.0
 author: mooviies
 commands:
   selp:
